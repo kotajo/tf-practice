@@ -39,10 +39,11 @@ resource "aws_s3_bucket_policy" "cloudtrail-s3" {
               "Service": "cloudtrail.amazonaws.com"
             },
             "Action": "s3:PutObject",
-            "Resource": "${aws_s3_bucket.cloudtrail-s3.arn}/prefix/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
+            "Resource": "${aws_s3_bucket.cloudtrail-s3.arn}/AWSLogs/${data.aws_caller_identity.current.account_id}/*",
             "Condition": {
                 "StringEquals": {
-                    "s3:x-amz-acl": "bucket-owner-full-control"
+                    "s3:x-amz-acl": "bucket-owner-full-control",
+                    "aws:SourceArn": "arn:aws:cloudtrail:region:${data.aws_caller_identity.current.account_id}:trail/cloudtrail"
                 }
             }
         }
@@ -61,4 +62,14 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "cloudtrail-s3-enc
       sse_algorithm     = "aws:kms"
     }
   }
+}
+
+# Ref: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/s3_bucket_public_access_block
+resource "aws_s3_bucket_public_access_block" "cloudtrail-s3_public_access_block" {
+  bucket = aws_s3_bucket.cloudtrail-s3.id
+
+  block_public_acls = true
+  ignore_public_acls = true
+  block_public_policy = true
+  restrict_public_buckets = true
 }
