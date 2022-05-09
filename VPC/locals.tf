@@ -75,3 +75,27 @@ locals {
     az = "ap-northeast-1d"
   }
 }
+
+locals {
+  maintenance-subnet01 = {
+    name = "${var.system-name}-maintenance-subnet-01"
+    cidr = "10.0.253.0/24"
+    az = "ap-northeast-1a"
+  }
+}
+
+locals {
+  maintenance-subnet02 = {
+    name = "${var.system-name}-maintenance-subnet02"
+    cidr = "10.0.254.0/24"
+    az = "ap-northeast-1c"
+  }
+}
+
+locals {
+  maintenance-subnet03 = {
+    name = "${var.system-name}-maintenance-subnet03"
+    cidr = "10.0.255.0/24"
+    az = "ap-northeast-1d"
+  }
+}

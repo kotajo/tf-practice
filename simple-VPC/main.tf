@@ -216,6 +216,36 @@ resource "aws_subnet" "db03" {
   }
 }
 
+resource "aws_subnet" "maintenance01" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "${lookup(local.maintenance-subnet01, "cidr")}"
+  availability_zone = "${lookup(local.maintenance-subnet01, "az")}"
+
+  tags = {
+    Name = "${lookup(local.maintenance-subnet01, "name")}"
+  }
+}
+
+resource "aws_subnet" "maintenance02" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "${lookup(local.maintenance-subnet02, "cidr")}"
+  availability_zone = "${lookup(local.maintenance-subnet02, "az")}"
+
+  tags = {
+    Name = "${lookup(local.maintenance-subnet02, "name")}"
+  }
+}
+
+resource "aws_subnet" "maintenance03" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "${lookup(local.maintenance-subnet03, "cidr")}"
+  availability_zone = "${lookup(local.maintenance-subnet03, "az")}"
+
+  tags = {
+    Name = "${lookup(local.maintenance-subnet03, "name")}"
+  }
+}
+
 ### Route Tables ###
 # Ref: https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/route_table
 resource "aws_route_table" "public" {
@@ -300,4 +330,19 @@ resource "aws_route_table_association" "db02" {
 resource "aws_route_table_association" "db03" {
   subnet_id      = aws_subnet.db03.id
   route_table_id = aws_route_table.private.id
+}
+
+resource "aws_route_table_association" "maintenance01" {
+  subnet_id      = aws_subnet.maintenance01.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "maintenance02" {
+  subnet_id      = aws_subnet.maintenance02.id
+  route_table_id = aws_route_table.public.id
+}
+
+resource "aws_route_table_association" "maintenance03" {
+  subnet_id      = aws_subnet.maintenance03.id
+  route_table_id = aws_route_table.public.id
 }
