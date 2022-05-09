@@ -89,3 +89,30 @@ output "subnet-db03-arn" {
   description = "The ARN of the subnet"
   value = aws_subnet.db03.arn
 }
+
+output "subnet-maintenance01-id" {
+  description = "The ID of the subnet"
+  value = aws_subnet.maintenance01.id
+}
+output "subnet-maintenance01-arn" {
+  description = "The ARN of the subnet"
+  value = aws_subnet.maintenance01.arn
+}
+
+output "subnet-maintenance02-id" {
+  description = "The ID of the subnet"
+  value = aws_subnet.maintenance02.id
+}
+output "subnet-maintenance02-arn" {
+  description = "The ARN of the subnet"
+  value = aws_subnet.maintenance02.arn
+}
+
+output "subnet-maintenance03-id" {
+  description = "The ID of the subnet"
+  value = aws_subnet.maintenance03.id
+}
+output "subnet-maintenance03-arn" {
+  description = "The ARN of the subnet"
+  value = aws_subnet.maintenance03.arn
+}
